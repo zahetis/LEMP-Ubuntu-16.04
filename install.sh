@@ -43,14 +43,28 @@ echo "--------------------------------------------------------------------"
 	sudo systemctl reload nginx
 	sudo systemctl restart nginx
 	systemctl enable nginx
+
+#
+# MariaDB
+#
+
+	sudo apt install -y mariadb-server mariadb-client
+	systemctl enable mysql
+#
+# PHP7
+#
+	sudo apt install php7.0-fpm php7.0-mbstring php7.0-xml php7.0-mysql php7.0-common php7.0-gd php7.0-json php7.0-cli php7.0-curl
 	sudo echo 'cgi.fix_pathinfo=0' >> /etc/php/7.0/fpm/php.ini
 		read -p "PHP.ini bearbeiten? (y/n)" INI
 		if [ $INI = "y" ]; then
 			sudo nano /etc/php/7.0/fpm/php.ini
 		fi
 		sudo systemctl restart php7.0-fpm
-	sudo apt install -y mariadb-server mariadb-client
-	systemctl enable mysql
+
+#
+# SSH
+#
+
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 	read -p "SSH Key hinterlegen? (y/n)" SSHKEY
@@ -58,3 +72,4 @@ chmod 700 ~/.ssh
 			sudo nano  ~/.ssh/authorized_keys2
 		fi
 chmod 600 ~/.ssh/authorized_keys2
+
