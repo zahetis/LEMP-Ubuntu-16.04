@@ -53,7 +53,7 @@ echo "--------------------------------------------------------------------"
 #
 # PHP7
 #
-	sudo apt install php7.0-fpm php7.0-mbstring php7.0-xml php7.0-mysql php7.0-common php7.0-gd php7.0-json php7.0-cli php7.0-curl
+	sudo apt install -y php7.0-fpm php7.0-mbstring php7.0-xml php7.0-mysql php7.0-common php7.0-gd php7.0-json php7.0-cli php7.0-curl
 	sudo echo 'cgi.fix_pathinfo=0' >> /etc/php/7.0/fpm/php.ini
 		read -p "PHP.ini bearbeiten? (y/n)" INI
 		if [ $INI = "y" ]; then
@@ -64,12 +64,19 @@ echo "--------------------------------------------------------------------"
 #
 # SSH
 #
-
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 	read -p "SSH Key hinterlegen? (y/n)" SSHKEY
 		if [ $SSHKEY = "y" ]; then
-			sudo nano  ~/.ssh/authorized_keys2
+			read -p "Bitte Pubkey eingeben" SSHPUBKEY
+			sudo echo '$SSHPUBKEY' >> ~/.ssh/authorized_keys 
+			sudo touch  ~/.ssh/authorized_keys
 		fi
-chmod 600 ~/.ssh/authorized_keys2
+chmod 600 ~/.ssh/authorized_keys
+
+# // Block Ping 
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
+
+
 
