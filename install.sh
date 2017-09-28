@@ -75,6 +75,7 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 
 # // Block Ping 
+sudo apt-get -y install ufw
 iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
 iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
 
